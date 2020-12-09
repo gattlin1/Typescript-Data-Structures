@@ -1,4 +1,4 @@
-export class HashMap<K, V> {
+class HashMap<K, V> {
     items: Array<Array<[K, V]>>;
     public count: number;
 
@@ -21,12 +21,16 @@ export class HashMap<K, V> {
 
     public get(key: K): V | null {
         const bucket = this.hash(key);
-
         if (!this.items[bucket]) {
             return null;
         }
 
-        return this.items[bucket].find(item => item[0] === key)[1];
+        this.items[bucket].forEach((item) => {
+            if (key === item[0]) {
+                return item[1];
+            }
+        })
+        return null;
     }
 
     public remove(key: K) {
@@ -68,3 +72,5 @@ export class HashMap<K, V> {
         return 5;
     }
 }
+
+export default HashMap;
