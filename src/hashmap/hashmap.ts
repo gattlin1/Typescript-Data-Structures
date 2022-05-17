@@ -1,11 +1,12 @@
-type KeyTypes = string;
-type IBuckets<K, V> = [K, V][][];
+type KeyTypes = string; //maybe add the ability to do more key types
+type IBucket<K, V> = [K, V][];
+type IBuckets<K, V> = IBucket<K, V>[];
 
 export default class HashMap<K extends KeyTypes, V> {
   private _size: number;
   private buckets: IBuckets<K, V>;
 
-  public constructor(items: [K, V][] = []) {
+  public constructor(items: IBucket<K, V> = []) {
     this._size = 0;
     this.buckets = Array.from(Array(16), () => []);
 
@@ -53,8 +54,8 @@ export default class HashMap<K extends KeyTypes, V> {
     return null;
   }
 
-  public items(): [K, V][] {
-    const items: [K, V][] = [];
+  public items(): IBucket<K, V> {
+    const items: IBucket<K, V> = [];
 
     for (const bucket of this.buckets) {
       if (bucket) {
@@ -68,7 +69,7 @@ export default class HashMap<K extends KeyTypes, V> {
 
   private resize() {
     const newSize = this.buckets.length * 2;
-    const tempNewBuckets: IBuckets<K, V> = new Array(newSize);
+    const tempNewBuckets: IBuckets<K, V> = Array.from(Array(newSize), () => []);
 
     for (const bucket of this.buckets) {
       for (const [key, value] of bucket) {
