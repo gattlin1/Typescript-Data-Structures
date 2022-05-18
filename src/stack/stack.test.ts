@@ -9,11 +9,11 @@ it('Initializes with list', () => {
   const list = [1, 2, 3, 4];
   const stack: Stack<number> = new Stack(list);
 
+  expect(stack.count).toBe(4);
   expect(stack.pop()).toBe(4);
   expect(stack.pop()).toBe(3);
   expect(stack.pop()).toBe(2);
   expect(stack.pop()).toBe(1);
-  expect(stack.count).toBe(0);
 });
 
 it('Gets count', () => {
