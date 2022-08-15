@@ -14,11 +14,7 @@ export class MinHeap {
   }
 
   private getParentIndex(childIndex: number): number {
-    if (childIndex % 2 === 0) {
-      return (childIndex - 2) / 2;
-    } else {
-      return (childIndex - 1) / 2;
-    }
+    return Math.floor((childIndex - 1) / 2);
   }
 
   private leftChild(index: number): number {
@@ -45,10 +41,10 @@ export class MinHeap {
     return this.getParentIndex(index) >= 0;
   }
 
-  private swap(a: number, b: number): void {
-    const temp = this.items[a];
-    this.items[a] = this.items[b];
-    this.items[b] = temp;
+  private swap(index1: number, index2: number): void {
+    const temp = this.items[index1];
+    this.items[index1] = this.items[index2];
+    this.items[index2] = temp;
   }
 
   public peek(): number | undefined {
@@ -76,7 +72,7 @@ export class MinHeap {
 
     while (
       this.hasParent(currentIndex) &&
-      this.parent(currentIndex) < this.items[currentIndex]
+      this.parent(currentIndex) > this.items[currentIndex]
     ) {
       const parentIndex = this.getParentIndex(currentIndex);
       this.swap(parentIndex, currentIndex);
